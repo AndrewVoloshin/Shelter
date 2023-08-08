@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shelter</title>
+  <link rel="icon" href="../assets/icons/favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="pets" class="ourpets">
+    <div class="ourpets__container">
+      <div class="overlay"></div>
+      <div class="mobile__menu">
+        <ul class="mobile__list arial">
+          <li class="mobile__item">
+            <a href="../main/index.html"" class=" mobile__link">About the shelter</a>
+          </li>
+          <li class="mobile__item">
+            <a href="" class="mobile__link active">Our pets</a>
+          </li>
+          <li class="mobile__item">
+            <a href="../main/index.html#help" class="mobile__link">Help the shelter</a>
+          </li>
+          <li class="mobile__item">
+            <a href="#contacts" class="mobile__link">Contacts</a>
+          </li>
+        </ul>
+      </div>
+      <div class="pets__popup">
+        <div class="popup__container" id="container">
+          <div class="popup__img">
+            <img src="" alt="pet picture" />
+          </div>
+          <div class="popup__content georgia">
+            <div class="popup__cross">
+              <div class="icon__container">
+                <img src="../assets/icons/cross.svg" alt="icon cross" class="cross__icon" />
+              </div>
+            </div>
+            <h3 class="popup__title"></h3>
+            <h4 class="popup__subtitle"></h4>
+            <p class="popup__text"></p>
+            <ul class="popup__list">
+              <li class="popup__item"><b>Age:</b> <span> </span></li>
+              <li class="popup__item"><b>Inoculations:</b> <span> </span></li>
+              <li class="popup__item"><b>Diseases:</b> <span> </span></li>
+              <li class="popup__item"><b>Parasites:</b> <span> </span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <header class="header">
+        <div class="header__container">
+          <div class="header__logo">
+            <a href="../main/index.html" class="header__link">
+              <h1 class="header__title georgia">Cozy House</h1>
+            </a>
+            <div class="header__subtitle arial">
+              Shelter for pets in Boston
+            </div>
+          </div>
+          <div class="header__burger">
+            <div class="burger__content"></div>
+          </div>
+          <nav class="header__nav">
+            <ul class="nav__list arial">
+              <li class="nav__item">
+                <a href="../main/index.html" class="nav__link">About the shelter</a>
+              </li>
+              <li class="nav__item">
+                <a href="" class="nav__link active">Our pets</a>
+              </li>
+              <li class="nav__item">
+                <a href="../main/index.html#help" class="nav__link">Help the shelter</a>
+              </li>
+              <li class="nav__item">
+                <a href="#contacts" class="nav__link">Contacts</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <main>
+        <section class="pets">
+          <div class="pets__container">
+            <h3 class="pets__title">
+              Our friends who <br />
+              are looking for a house
+            </h3>
+            <div class="pets__cards"></div>
+            <!-- <div class="pets__cards">
+
+              <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-jennifer.png"
+                      alt="puppy image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Jennifer</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-woody.png"
+                      alt="dog image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Woody</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-sophia.png"
+                      alt="puppy image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Sophia</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-timmy.png"
+                      alt="cat image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Timmy</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-charly.png"
+                      alt="dog image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Charly</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+                  <div class="pet__img">
+                    <img
+                      src="../assets/images/pets-scarlet.png"
+                      alt="puppy image"
+                    />
+                  </div>
+                  <p class="pet__title georgia">Scarlett</p>
+                  <a href="" class="pet__link">Learn more</a>
+                </div>
+                <div class="pet__card">
+              <div class="pet__img">
+                <img src="../assets/images/pets-freddie.png" alt="cat image" />
+              </div>
+              <p class="pet__title georgia">Freddie</p>
+              <a href="" class="pet__link">Learn more</a>
+            </div>
+          </div> -->
+            <div class="pagination georgia">
+              <button disabled type="button" class="pagination__button backall">
+                &lt;&lt;
+              </button>
+              <button disabled type="button" class="pagination__button backone">
+                &lt;
+              </button>
+              <button type="button" class="pagination__button curpage">
+                1
+              </button>
+              <button type="button" class="pagination__button aheadone">
+                >
+              </button>
+              <button type="button" class="pagination__button aheadall">
+                >>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer id="contacts" class="footer">
+        <div class="footer__contacts georgia">
+          <h3 class="contacts__title">For questions and suggestions</h3>
+          <h4 class="contact__email contacts__info">email@shelter.com</h4>
+          <h4 class="contacts__phone contacts__info">+13 674 567 75 54</h4>
+        </div>
+        <div class="footer__location georgia">
+          <h3 class="location__title">We are waiting for your visit</h3>
+          <h4 class="location__boston location__info">
+            1 Central Street, Boston (entrance from the store)
+          </h4>
+          <h4 class="location__london location__info">
+            18 South Park, London
+          </h4>
+        </div>
+        <div class="footer__img">
+          <img src="../assets/images/footer-puppy.png" alt="puppy image" />
+        </div>
+      </footer>
+    </div>
+  </div>
+  <template id="petCard">
+    <div class="pet__card">
+      <div class="pet__img">
+        <img src="../assets/images/pets-jennifer.png" alt="puppy image" class="image" />
+      </div>
+      <p class="pet__title georgia">Jennifer</p>
+      <a href="" class="pet__link">Learn more</a>
+    </div>
+  </template>
+  <script src="script.js"></script>
+</body>
+
+</html>
