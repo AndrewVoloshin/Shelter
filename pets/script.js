@@ -267,14 +267,12 @@ function addPagination() {
   createArrPaggination();
   window.addEventListener("resize", handleResize);
   createCurrentPetsPage(paginationData);
-
   showCards(paginationData.currentPets);
 }
 
 function createCurrentPetsPage({ currentPage, pets }) {
-  if (currentPage === 1) {
-    paginationData.currentPets = pets.slice(0, 8);
-  }
+  paginationData.currentPets = pets.slice(8 * (currentPage - 1), 8 * currentPage);
+  console.log(paginationData.currentPets, "paginationData.currentPets");
 }
 
 function createArrPaggination() {
@@ -314,3 +312,30 @@ function showCards(pets) {
     document.querySelector(".pets__cards").appendChild(fragment);
   }
 }
+
+const buttonAheadOne = document.querySelector(".aheadone");
+buttonAheadOne.addEventListener("click", (e) => {
+  if (paginationData.currentPage > 5) return;
+  paginationData.currentPage++;
+  document.querySelector(".curpage").textContent = paginationData.currentPage;
+  createCurrentPetsPage(paginationData);
+  showCards(paginationData.currentPets);
+  console.log(buttonAheadAll, "buttonAheadAll");
+});
+
+const buttonAheadAll = document.querySelector(".aheadall");
+buttonAheadAll.addEventListener("click", (e) => {
+  if (paginationData.currentPage > 5) return;
+
+  paginationData.currentPage = 6;
+  document.querySelector(".curpage").textContent = paginationData.currentPage;
+  createCurrentPetsPage(paginationData);
+  showCards(paginationData.currentPets);
+  buttonAheadOne.disabled = true;
+  buttonBackAll.disabled = false;
+});
+
+const buttonBackOne = document.querySelector(".backone")
+buttonBackOne.addEventListener("click", (e) => {});
+const buttonBackAll = document.querySelector(".backall")
+buttonBackAll.addEventListener("click", (e) => {});

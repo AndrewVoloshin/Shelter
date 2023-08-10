@@ -514,6 +514,17 @@ display: flex;
   transition: all .2s ease;
 }
 
+.pagination__button:disabled{
+  border: 2px solid #CDCDCD;
+  color: #CDCDCD;
+  cursor: auto;
+}
+.pagination__button:disabled:hover{
+  border: 2px solid #CDCDCD;
+  color: #CDCDCD;
+  cursor: auto;
+}
+
 .backall, .backone {
   border: 2px solid #CDCDCD;
   color: #CDCDCD;;
