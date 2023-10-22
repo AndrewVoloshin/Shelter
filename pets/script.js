@@ -314,28 +314,37 @@ function showCards(pets) {
 }
 
 const buttonAheadOne = document.querySelector(".aheadone");
-buttonAheadOne.addEventListener("click", (e) => {
-  if (paginationData.currentPage > 5) return;
-  paginationData.currentPage++;
-  document.querySelector(".curpage").textContent = paginationData.currentPage;
-  createCurrentPetsPage(paginationData);
-  showCards(paginationData.currentPets);
-  console.log(buttonAheadAll, "buttonAheadAll");
-});
+buttonAheadOne.addEventListener("click", (e) => ++paginationData.currentPage);
 
 const buttonAheadAll = document.querySelector(".aheadall");
-buttonAheadAll.addEventListener("click", (e) => {
-  if (paginationData.currentPage > 5) return;
+buttonAheadAll.addEventListener("click", (e) => (paginationData.currentPage = 6));
 
-  paginationData.currentPage = 6;
-  document.querySelector(".curpage").textContent = paginationData.currentPage;
+const buttonBackOne = document.querySelector(".backone");
+buttonBackOne.addEventListener("click", (e) => --paginationData.currentPage);
+
+const buttonBackAll = document.querySelector(".backall");
+buttonBackAll.addEventListener("click", (e) => (paginationData.currentPage = 1));
+
+const pagination = document.querySelector(".pagination ");
+pagination.addEventListener("click", (event) => {
   createCurrentPetsPage(paginationData);
   showCards(paginationData.currentPets);
-  buttonAheadOne.disabled = true;
-  buttonBackAll.disabled = false;
+
+  console.log(paginationData.currentPage);
+  document.querySelector(".curpage").textContent = paginationData.currentPage;
+  if (paginationData.currentPage === 1) {
+    buttonBackOne.disabled = buttonBackAll.disabled = true;
+    buttonAheadOne.disabled = buttonAheadAll.disabled = false;
+  }
+
+  if (paginationData.currentPage > 1 && paginationData.currentPage < 6) {
+    buttonBackOne.disabled = buttonBackAll.disabled = false;
+    buttonAheadOne.disabled = buttonAheadAll.disabled = false;
+  }
+
+  if (paginationData.currentPage === 6) {
+    buttonBackOne.disabled = buttonBackAll.disabled = false;
+    buttonAheadOne.disabled = buttonAheadAll.disabled = true;
+  }
 });
 
-const buttonBackOne = document.querySelector(".backone")
-buttonBackOne.addEventListener("click", (e) => {});
-const buttonBackAll = document.querySelector(".backall")
-buttonBackAll.addEventListener("click", (e) => {});
