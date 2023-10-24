@@ -1,7 +1,3 @@
-// console.log(
-//   "Страница Main\n1. Вёрстка страницы Main соответствует макету при ширине экрана 1280px: +14\n2. Вёрстка страницы Main соответствует макету при ширине экрана 768px: +14\n3. Вёрстка страницы Main соответствует макету при ширине экрана 320px: +14\n4. Вёрстка страницы Pets соответствует макету при ширине экрана 1280px: +6\n5. Вёрстка страницы Pets соответствует макету при ширине экрана 768px: +6\n6. Вёрстка страницы Pets соответствует макету при ширине экрана 320px: +6\n7. Весь контент страницы при этом сохраняется: не обрезается и не удаляется: +20\n8. Верстка резиновая: +8\n9. Появляется иконка бургер-меню: +4\n10. Верстка обеих страниц валидная +10  \nИтого: 100   "
-// );
-
 var linkNav = document.querySelectorAll('[href^="#"]'), //выбираем все ссылки к якорю на странице
   V = 0.25; // скорость, может иметь дробное значение через точку (чем меньше значение - тем больше скорость)
 for (var i = 0; i < linkNav.length; i++) {
@@ -261,72 +257,6 @@ const paginationData = {
   currentPets: [],
   pageCount: null,
 };
-addPagination();
-
-function addPagination() {
-  handleResize();
-  window.addEventListener("resize", handleResize);
-  createArrPaggination();
-  createCurrentPetsPage(paginationData);
-  showCards(paginationData.currentPets);
-}
-
-function createCurrentPetsPage({ currentPage, pets, screenWidth }) {
-  let cardsPerPage;
-  if (screenWidth > 1279) cardsPerPage = 8;
-  else if (screenWidth >= 768 && screenWidth < 1280) cardsPerPage = 6;
-  else if (screenWidth <= 767) cardsPerPage = 3;
-
-  paginationData.currentPets = pets.slice(cardsPerPage * (currentPage - 1), cardsPerPage * currentPage);
-}
-
-function createArrPaggination() {
-  for (let i = 0; i < 6; i++) {
-    const localArray = Array.from(pets);
-    shuffleArray(localArray);
-    paginationData.pets = [...paginationData.pets, ...localArray];
-  }
-}
-console.log(paginationData.pets, "paginationData.pets");
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-function handleResize() {
-  paginationData.screenWidth = window.innerWidth;
-  if (paginationData.screenWidth === 1280 || paginationData.screenWidth === 768 || paginationData.screenWidth === 320) paginationData.currentPage = 1;
-
-  console.log(paginationData.screenWidth);
-  computeCountPage(paginationData.screenWidth);
-  createCurrentPetsPage(paginationData);
-  showCards(paginationData.currentPets);
-}
-
-function computeCountPage(screenWidth) {
-  if (screenWidth > 1279) paginationData.pageCount = 6;
-  if (screenWidth >= 768 && screenWidth < 1280) paginationData.pageCount = 8;
-  if (screenWidth <= 767) paginationData.pageCount = 16;
-}
-
-function showCards(currentPets) {
-  console.log(paginationData.screenWidth);
-
-  const fragment = document.createDocumentFragment();
-  const cardItem = document.querySelector("#petCard");
-
-  currentPets.forEach((card) => {
-    const cardClone = cardItem.content.cloneNode(true);
-    cardClone.querySelector(".image").src = card.img;
-    cardClone.querySelector(".pet__title").textContent = card.name;
-    fragment.append(cardClone);
-  });
-  document.querySelector(".pets__cards").innerHTML = "";
-  document.querySelector(".pets__cards").appendChild(fragment);
-}
 
 const buttonAheadOne = document.querySelector(".aheadone");
 buttonAheadOne.addEventListener("click", (e) => ++paginationData.currentPage);
@@ -345,11 +275,23 @@ buttonBackAll.addEventListener("click", (e) => (paginationData.currentPage = 1))
 const pagination = document.querySelector(".pagination ");
 
 pagination.addEventListener("click", (event) => {
-  createCurrentPetsPage(paginationData);
+  setCardsOnPage(paginationData);
   showCards(paginationData.currentPets);
-
   document.querySelector(".curpage").textContent = paginationData.currentPage;
+  checkButtonOnDisable();
+});
 
+addPagination();
+
+function addPagination() {
+  handleResize();
+  window.addEventListener("resize", handleResize);
+  createArrPaggination();
+  setCardsOnPage(paginationData);
+  showCards(paginationData.currentPets);
+}
+
+function checkButtonOnDisable() {
   if (paginationData.currentPage === 1) {
     buttonBackOne.disabled = buttonBackAll.disabled = true;
     buttonAheadOne.disabled = buttonAheadAll.disabled = false;
@@ -364,4 +306,60 @@ pagination.addEventListener("click", (event) => {
     buttonBackOne.disabled = buttonBackAll.disabled = false;
     buttonAheadOne.disabled = buttonAheadAll.disabled = true;
   }
-});
+}
+
+function setCardsOnPage({ currentPage, pets, screenWidth }) {
+  let cardsPerPage;
+  if (screenWidth > 1279) cardsPerPage = 8;
+  else if (screenWidth >= 768 && screenWidth < 1280) cardsPerPage = 6;
+  else if (screenWidth <= 767) cardsPerPage = 3;
+
+  paginationData.currentPets = pets.slice(cardsPerPage * (currentPage - 1), cardsPerPage * currentPage);
+}
+
+function createArrPaggination() {
+  for (let i = 0; i < 6; i++) {
+    const localArray = Array.from(pets);
+    shuffleArray(localArray);
+    paginationData.pets = [...paginationData.pets, ...localArray];
+  }
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function handleResize() {
+  paginationData.screenWidth = window.innerWidth;
+  setCountPage(paginationData.screenWidth);
+  if (paginationData.currentPage > paginationData.pageCount) paginationData.currentPage = paginationData.pageCount;
+  document.querySelector(".curpage").textContent = paginationData.currentPage;
+  checkButtonOnDisable();
+  setCardsOnPage(paginationData);
+  showCards(paginationData.currentPets);
+}
+
+function setCountPage(screenWidth) {
+  if (screenWidth > 1279) paginationData.pageCount = 6;
+  if (screenWidth >= 768 && screenWidth < 1280) paginationData.pageCount = 8;
+  if (screenWidth <= 767) paginationData.pageCount = 16;
+}
+
+function showCards(currentPets) {
+  const fragment = document.createDocumentFragment();
+  const cardItem = document.querySelector("#petCard");
+
+  currentPets.forEach((card) => {
+    const cardClone = cardItem.content.cloneNode(true);
+    cardClone.querySelector(".image").src = card.img;
+    cardClone.querySelector(".pet__title").textContent = card.name;
+    fragment.append(cardClone);
+  });
+  document.querySelector(".pets__cards").innerHTML = "";
+  document.querySelector(".pets__cards").appendChild(fragment);
+}
+
+
