@@ -517,7 +517,15 @@ ul.mobile__list {
   justify-content: center;
   align-items: center;
   z-index: 8;
+  transition: 0.5s all ease;
 }
+
+.popup__cross:hover {
+  rotate: 90deg;
+}
+.popup__cross:active{
+  transform: scale(0.9);
+} 
 
 .icon__container{
   position: relative;

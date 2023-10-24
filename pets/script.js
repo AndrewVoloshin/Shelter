@@ -279,6 +279,7 @@ pagination.addEventListener("click", (event) => {
   showCards(paginationData.currentPets);
   document.querySelector(".curpage").textContent = paginationData.currentPage;
   checkButtonOnDisable();
+  addEventOnPetsCard()
 });
 
 addPagination();
@@ -340,6 +341,7 @@ function handleResize() {
   checkButtonOnDisable();
   setCardsOnPage(paginationData);
   showCards(paginationData.currentPets);
+  addEventOnPetsCard() 
 }
 
 function setCountPage(screenWidth) {
@@ -360,6 +362,74 @@ function showCards(currentPets) {
   });
   document.querySelector(".pets__cards").innerHTML = "";
   document.querySelector(".pets__cards").appendChild(fragment);
+}
+
+ 
+
+// Popup start
+addEventOnPetsCard()
+function addEventOnPetsCard() {
+  let cardsCollection = document.querySelectorAll(".pet__card");
+  for (card of cardsCollection) {
+    card.addEventListener("click", (event) => {
+      setup.popup = true;
+      const pet = getPetObj(event.currentTarget);
+      addInfoForCard(pet);
+      openPopUp();
+    });
+  }
+}
+
+document.querySelector(".popup__cross").addEventListener("click", (e) => {
+  closePopUp();
+});
+document.querySelector(".overlay ").addEventListener("click", (e) => {
+  closePopUp();
+});
+
+function openPopUp() {
+  document.querySelector(".pets__popup").classList.add("pets__popup-act");
+  document.querySelector(".overlay").classList.add("overlay-act");
+  document.body.style.overflow = "hidden";
+}
+
+function closePopUp() {
+  document.querySelector(".pets__popup").classList.remove("pets__popup-act");
+  document.querySelector(".overlay").classList.remove("overlay-act");
+  document.body.style.overflow = "auto";
+}
+
+function getPetObj(petEvent) {
+  petEvent = petEvent.querySelector(".pet__title").innerText;
+  let pet = pets.filter((pet) => pet.name === petEvent);
+  return pet[0];
+}
+
+function addInfoForCard(pet) {
+  document.querySelector(".popup__img img").src = pet.img;
+  document.querySelector(".popup__title").innerText = pet.name;
+  document.querySelector(
+    ".popup__subtitle"
+  ).innerText = `${pet.type} - ${pet.breed}`;
+  document.querySelector(".popup__text").innerText = pet.description;
+
+  const list = document.querySelectorAll(".popup__item");
+  list[0].querySelector("span").innerText = pet.age;
+  list[1].querySelector("span").innerText = pet.inoculations;
+  list[2].querySelector("span").innerText = pet.diseases;
+  list[3].querySelector("span").innerText = pet.parasites;
+
+  alignCard();
+}
+
+function alignCard() {
+  setTimeout((e) => {
+    let element = document.querySelector(".pets__popup");
+    element.style.top = `${
+      window.pageYOffset +
+      (document.documentElement.clientHeight - element.offsetHeight) / 2
+    }px`;
+  }, 0);
 }
 
 

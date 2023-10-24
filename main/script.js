@@ -1,20 +1,16 @@
-// console.log(
-//   "Страница Main\n1. Вёрстка страницы Main соответствует макету при ширине экрана 1280px: +14\n2. Вёрстка страницы Main соответствует макету при ширине экрана 768px: +14\n3. Вёрстка страницы Main соответствует макету при ширине экрана 320px: +14\n4. Вёрстка страницы Pets соответствует макету при ширине экрана 1280px: +6\n5. Вёрстка страницы Pets соответствует макету при ширине экрана 768px: +6\n6. Вёрстка страницы Pets соответствует макету при ширине экрана 320px: +6\n7. Весь контент страницы при этом сохраняется: не обрезается и не удаляется: +20\n8. Верстка резиновая: +8\n9. Появляется иконка бургер-меню: +4\n10. Верстка обеих страниц валидная +10  \nИтого: 100   "
-// );
-
-var linkNav = document.querySelectorAll('[href^="#"]'), //выбираем все ссылки к якорю на странице
-  V = 0.25; // скорость, может иметь дробное значение через точку (чем меньше значение - тем больше скорость)
+var linkNav = document.querySelectorAll('[href^="#"]'), 
+  V = 0.25; 
 for (var i = 0; i < linkNav.length; i++) {
   linkNav[i].addEventListener(
     "click",
     function (e) {
-      //по клику на ссылку
-      e.preventDefault(); //отменяем стандартное поведение
-      var w = window.pageYOffset, // производим прокрутка прокрутка
-        hash = this.href.replace(/[^#]*(.*)/, "$1"); // к id элемента, к которому нужно перейти
-      (t = document.querySelector(hash).getBoundingClientRect().top), // отступ от окна браузера до id
+  
+      e.preventDefault(); 
+      var w = window.pageYOffset, 
+        hash = this.href.replace(/[^#]*(.*)/, "$1"); 
+      (t = document.querySelector(hash).getBoundingClientRect().top), 
         (start = null);
-      requestAnimationFrame(step); // подробнее про функцию анимации [developer.mozilla.org]
+      requestAnimationFrame(step); 
       function step(time) {
         if (start === null) start = time;
         var progress = time - start,
@@ -26,7 +22,7 @@ for (var i = 0; i < linkNav.length; i++) {
         if (r != w + t) {
           requestAnimationFrame(step);
         } else {
-          location.hash = hash; // URL с хэшем
+          location.hash = hash; 
         }
       }
     },
