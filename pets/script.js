@@ -1,16 +1,15 @@
-var linkNav = document.querySelectorAll('[href^="#"]'), //выбираем все ссылки к якорю на странице
-  V = 0.25; // скорость, может иметь дробное значение через точку (чем меньше значение - тем больше скорость)
+var linkNav = document.querySelectorAll('[href^="#"]')
+  V = 0.25; 
 for (var i = 0; i < linkNav.length; i++) {
   linkNav[i].addEventListener(
     "click",
     function (e) {
-      //по клику на ссылку
-      e.preventDefault(); //отменяем стандартное поведение
-      var w = window.pageYOffset, // производим прокрутка прокрутка
-        hash = this.href.replace(/[^#]*(.*)/, "$1"); // к id элемента, к которому нужно перейти
-      (t = document.querySelector(hash).getBoundingClientRect().top), // отступ от окна браузера до id
+      e.preventDefault(); 
+      var w = window.pageYOffset, 
+        hash = this.href.replace(/[^#]*(.*)/, "$1"); 
+      (t = document.querySelector(hash).getBoundingClientRect().top), 
         (start = null);
-      requestAnimationFrame(step); // подробнее про функцию анимации [developer.mozilla.org]
+      requestAnimationFrame(step); 
       function step(time) {
         if (start === null) start = time;
         var progress = time - start,
@@ -19,7 +18,7 @@ for (var i = 0; i < linkNav.length; i++) {
         if (r != w + t) {
           requestAnimationFrame(step);
         } else {
-          location.hash = hash; // URL с хэшем
+          location.hash = hash; 
         }
       }
     },
