@@ -259,20 +259,25 @@ const paginationData = {
   screenWidth: null,
   pets: [],
   currentPets: [],
+  pageCount: null,
 };
 addPagination();
 
 function addPagination() {
   handleResize();
-  createArrPaggination();
   window.addEventListener("resize", handleResize);
+  createArrPaggination();
   createCurrentPetsPage(paginationData);
   showCards(paginationData.currentPets);
 }
 
-function createCurrentPetsPage({ currentPage, pets }) {
-  paginationData.currentPets = pets.slice(8 * (currentPage - 1), 8 * currentPage);
-  console.log(paginationData.currentPets, "paginationData.currentPets");
+function createCurrentPetsPage({ currentPage, pets, screenWidth }) {
+  let cardsPerPage;
+  if (screenWidth > 1279) cardsPerPage = 8;
+  else if (screenWidth >= 768 && screenWidth < 1280) cardsPerPage = 6;
+  else if (screenWidth <= 767) cardsPerPage = 3;
+
+  paginationData.currentPets = pets.slice(cardsPerPage * (currentPage - 1), cardsPerPage * currentPage);
 }
 
 function createArrPaggination() {
@@ -293,31 +298,43 @@ function shuffleArray(array) {
 
 function handleResize() {
   paginationData.screenWidth = window.innerWidth;
+  if (paginationData.screenWidth === 1280 || paginationData.screenWidth === 768 || paginationData.screenWidth === 320) paginationData.currentPage = 1;
+
+  console.log(paginationData.screenWidth);
+  computeCountPage(paginationData.screenWidth);
+  createCurrentPetsPage(paginationData);
+  showCards(paginationData.currentPets);
 }
 
-function showCards(pets) {
-  console.log(paginationData.screenWidth);
-  if (paginationData.screenWidth > 1279) {
-    console.log("hre99");
-    const fragment = document.createDocumentFragment();
-    const cardItem = document.querySelector("#petCard");
+function computeCountPage(screenWidth) {
+  if (screenWidth > 1279) paginationData.pageCount = 6;
+  if (screenWidth >= 768 && screenWidth < 1280) paginationData.pageCount = 8;
+  if (screenWidth <= 767) paginationData.pageCount = 16;
+}
 
-    pets.forEach((card) => {
-      const cardClone = cardItem.content.cloneNode(true);
-      cardClone.querySelector(".image").src = card.img;
-      cardClone.querySelector(".pet__title").textContent = card.name;
-      fragment.append(cardClone);
-    });
-    document.querySelector(".pets__cards").innerHTML = "";
-    document.querySelector(".pets__cards").appendChild(fragment);
-  }
+function showCards(currentPets) {
+  console.log(paginationData.screenWidth);
+
+  const fragment = document.createDocumentFragment();
+  const cardItem = document.querySelector("#petCard");
+
+  currentPets.forEach((card) => {
+    const cardClone = cardItem.content.cloneNode(true);
+    cardClone.querySelector(".image").src = card.img;
+    cardClone.querySelector(".pet__title").textContent = card.name;
+    fragment.append(cardClone);
+  });
+  document.querySelector(".pets__cards").innerHTML = "";
+  document.querySelector(".pets__cards").appendChild(fragment);
 }
 
 const buttonAheadOne = document.querySelector(".aheadone");
 buttonAheadOne.addEventListener("click", (e) => ++paginationData.currentPage);
 
 const buttonAheadAll = document.querySelector(".aheadall");
-buttonAheadAll.addEventListener("click", (e) => (paginationData.currentPage = 6));
+buttonAheadAll.addEventListener("click", (e) => {
+  paginationData.currentPage = paginationData.pageCount;
+});
 
 const buttonBackOne = document.querySelector(".backone");
 buttonBackOne.addEventListener("click", (e) => --paginationData.currentPage);
@@ -326,25 +343,25 @@ const buttonBackAll = document.querySelector(".backall");
 buttonBackAll.addEventListener("click", (e) => (paginationData.currentPage = 1));
 
 const pagination = document.querySelector(".pagination ");
+
 pagination.addEventListener("click", (event) => {
   createCurrentPetsPage(paginationData);
   showCards(paginationData.currentPets);
 
-  console.log(paginationData.currentPage);
   document.querySelector(".curpage").textContent = paginationData.currentPage;
+
   if (paginationData.currentPage === 1) {
     buttonBackOne.disabled = buttonBackAll.disabled = true;
     buttonAheadOne.disabled = buttonAheadAll.disabled = false;
   }
 
-  if (paginationData.currentPage > 1 && paginationData.currentPage < 6) {
+  if (paginationData.currentPage > 1 && paginationData.currentPage < paginationData.pageCount) {
     buttonBackOne.disabled = buttonBackAll.disabled = false;
     buttonAheadOne.disabled = buttonAheadAll.disabled = false;
   }
 
-  if (paginationData.currentPage === 6) {
+  if (paginationData.currentPage === paginationData.pageCount) {
     buttonBackOne.disabled = buttonBackAll.disabled = false;
     buttonAheadOne.disabled = buttonAheadAll.disabled = true;
   }
 });
-

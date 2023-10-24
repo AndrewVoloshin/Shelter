@@ -878,11 +878,17 @@ display: flex;
   }
 
 }
+
 @media screen and (min-width: 1260px ) {
   .pet__card {
     display: flex;
   }
+}
 
+@media screen and (min-width: 1277px ) {
+  .pet__card {
+    width: 271px;
+  }
 }
 
 @media screen and (min-width: 1280px ) {
@@ -908,6 +914,14 @@ display: flex;
     height: 90px;
     text-align: center;
     margin-bottom: 60px;
+  }
+
+  .pets__cards{
+    width: 1280px;
+  }
+  
+  .pet__card {
+    width: 270px;
   }
 
     /* Pets popup */
